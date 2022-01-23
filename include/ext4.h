@@ -616,6 +616,13 @@ const ext4_direntry *ext4_dir_entry_next(ext4_dir *dir);
  * @param   dir Directory handle.*/
 void ext4_dir_entry_rewind(ext4_dir *dir);
 
+/**@brief   Rewine directory entry offset.
+ *
+ * @param  file
+ *
+ * @return file type*/
+uint32_t ext4_ftype(ext4_file *f);
+
 
 #ifdef __cplusplus
 }

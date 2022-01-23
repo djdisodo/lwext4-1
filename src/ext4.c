@@ -3235,6 +3235,24 @@ void ext4_dir_entry_rewind(ext4_dir *dir)
 	dir->next_off = 0;
 }
 
+uint32_t ext4_ftype(ext4_file *f) {
+	struct ext4_inode_ref inode_ref;
+	int r;
+	struct ext4_mountpoint *mp;
+	mp = f->mp;
+	EXT4_MP_LOCK(mp);
+	r = ext4_fs_get_inode_ref(&mp->fs, f->inode, &inode_ref);
+	if (r != EOK) {
+		EXT4_MP_UNLOCK(mp);
+		return r;
+	}
+
+	uint32_t type = ext4_inode_type(&mp->fs.sb, inode_ref.inode);
+	EXT4_MP_UNLOCK(mp);
+	return type;
+
+}
+
 /**
  * @}
  */
